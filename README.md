@@ -4,6 +4,11 @@
 
 Built for the **Government of Maharashtra** problem statement on agricultural price discovery, verified market linkages, and transparent trade settlement. AgriConnect Maharashtra serves smallholders, Farmer Producer Organizations (FPOs), verified institutional buyers, and Maharashtra State Innovation Society (MSIS) regulators under a single, cohesive platform.
 
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live%20Deployment-black?logo=vercel&style=for-the-badge)](https://agriconnect-maharashtra.vercel.app)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-abdul--halik--ai%2Fagriconnect--maharashtra-181717?logo=github&style=for-the-badge)](https://github.com/abdul-halik-ai/agriconnect-maharashtra)
+
+🌐 **Live URL:** [https://agriconnect-maharashtra.vercel.app](https://agriconnect-maharashtra.vercel.app)
+
 ---
 
 ## 🌾 Key Product Capabilities
