@@ -38,3 +38,8 @@ dev.db-shm
 dev.db-wal
 
 .vercel
+
+# python
+.venv/
+__pycache__/
+
