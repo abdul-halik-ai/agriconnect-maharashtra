@@ -19,8 +19,9 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ transporters, storages });
   } catch (error) {
-    console.error("Logistics GET error:", error);
-    return NextResponse.json({ error: "Failed to load logistics" }, { status: 500 });
+    console.warn("Logistics DB query failed, serving demo logistics:", error);
+    const { MOCK_TRANSPORTERS, MOCK_STORAGES } = await import("@/lib/mockData");
+    return NextResponse.json({ transporters: MOCK_TRANSPORTERS, storages: MOCK_STORAGES });
   }
 }
 

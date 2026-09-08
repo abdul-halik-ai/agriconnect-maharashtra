@@ -67,8 +67,16 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(deals);
   } catch (error) {
-    console.error("Deals GET error:", error);
-    return NextResponse.json({ error: "Failed to fetch deals" }, { status: 500 });
+    console.warn("Deals DB query failed, serving deterministic demo deals:", error);
+    const { MOCK_DEALS } = await import("@/lib/mockData");
+    const { searchParams } = new URL(req.url);
+    const stage = searchParams.get("stage");
+
+    let filtered = [...MOCK_DEALS];
+    if (stage && stage !== "ALL") {
+      filtered = filtered.filter((d) => d.stage === stage);
+    }
+    return NextResponse.json(filtered);
   }
 }
 

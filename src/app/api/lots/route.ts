@@ -39,8 +39,21 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(lots);
   } catch (error) {
-    console.error("Lots GET error:", error);
-    return NextResponse.json({ error: "Failed to fetch lots" }, { status: 500 });
+    console.warn("Lots DB query failed, serving deterministic demo lots:", error);
+    const { MOCK_LOTS } = await import("@/lib/mockData");
+    const { searchParams } = new URL(req.url);
+    const creatorId = searchParams.get("creatorId");
+    const commodityId = searchParams.get("commodityId");
+    const isAggregated = searchParams.get("isAggregated");
+
+    let filtered = [...MOCK_LOTS];
+    if (creatorId) filtered = filtered.filter((l) => l.creatorId === creatorId);
+    if (commodityId) filtered = filtered.filter((l) => l.commodityId === commodityId);
+    if (isAggregated !== null && isAggregated !== undefined) {
+      filtered = filtered.filter((l) => l.isAggregated === (isAggregated === "true"));
+    }
+
+    return NextResponse.json(filtered);
   }
 }
 

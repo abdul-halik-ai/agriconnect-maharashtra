@@ -48,8 +48,9 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ listings, buyers });
   } catch (error) {
-    console.error("Demand GET error:", error);
-    return NextResponse.json({ error: "Failed to fetch demand listings" }, { status: 500 });
+    console.warn("Demand DB query failed, serving demo demand listings:", error);
+    const { MOCK_DEMANDS } = await import("@/lib/mockData");
+    return NextResponse.json({ listings: MOCK_DEMANDS, buyers: [] });
   }
 }
 

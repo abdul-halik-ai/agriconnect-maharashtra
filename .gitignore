@@ -36,3 +36,5 @@ next-env.d.ts
 dev.db-journal
 dev.db-shm
 dev.db-wal
+
+.vercel

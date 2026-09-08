@@ -93,6 +93,88 @@ Use the **Demo Role Switcher** dropdown in the top navbar to instantly test all 
 
 ---
 
+## 🧪 Featured Demo Samples & Live Walkthrough Scenarios
+
+Every feature is seeded with realistic Maharashtra agricultural data. Click any of the scenarios below to evaluate the system live:
+
+### 1. 🌾 Mandi Price Intelligence & Sell/Hold Advisory
+- **Live URL:** [https://agriconnect-maharashtra.vercel.app/farmer/prices](https://agriconnect-maharashtra.vercel.app/farmer/prices)
+- **What to explore:**
+  - Select **Onion (Red Nashik)** in **Lasalgaon APMC**.
+  - Review the **Sell/Hold Heuristic Banner**: analyzes 35-day moving averages and market arrivals (shows the intentional **+11.8%** weekly surge and advises farmers to hold for 3 days).
+  - Inspect the **Nearby Market Arbitrage Matrix**: compares Lasalgaon prices with Pune, Nashik, and Chhatrapati Sambhaji Nagar, factoring in distance and freight rates (e.g., selling in Pune yields +₹170/qtl net gain).
+  - Toggle between English and Marathi (**मराठी**) with the language button.
+
+### 2. 📜 Tamper-Proof Digital Lot Passport (QR Certificate)
+- **Sample Lot 1 (Farmer Gate):** [View Lot #MH-NSK-2026-0812 Passport](https://agriconnect-maharashtra.vercel.app/farmer/lots/lot_ramesh_onion/passport)
+  - **Commodity:** Red Onion • **Grade:** Grade A (50-70mm uniform) • **Moisture:** 11.2%
+  - **Integrity Hash:** Cryptographic SHA-256 state seal (`a4f891b2c3d...`)
+  - **Verification:** Scan or click the embedded SVG QR code to verify on-chain certificate authenticity.
+- **Sample Lot 2 (FPO Pooled Bulk):** [View Lot #FPO-SYD-2026-0401 Passport](https://agriconnect-maharashtra.vercel.app/farmer/lots/fpo_agg_lot_1/passport)
+  - Aggregated bulk lot of 150 Qtl pooled from 4 smallholders with weighted moisture validation.
+
+### 3. 🏢 FPO Produce Pooling & Member Payout Split Ledger
+- **Live Pooling Tool:** [https://agriconnect-maharashtra.vercel.app/fpo/lots/aggregate](https://agriconnect-maharashtra.vercel.app/fpo/lots/aggregate)
+- **Live Member Payout Ledger:** [https://agriconnect-maharashtra.vercel.app/fpo/payouts](https://agriconnect-maharashtra.vercel.app/fpo/payouts)
+- **Sample Scenario:**
+  - Sahyadri FPO pooled 150 Qtl of Grade A Onion from 4 smallholder farmers:
+    - **Ramesh Patil:** 45 Qtl (30.00% share → **₹1,17,900**)
+    - **Suresh Jadhav:** 40 Qtl (26.67% share → **₹1,04,800**)
+    - **Kavita Shinde:** 35 Qtl (23.33% share → **₹91,700**)
+    - **Dattatray More:** 30 Qtl (20.00% share → **₹78,600**)
+  - Total Contract Value: **₹3,93,000**. When the deal closes, each farmer's bank account receives their exact fractional payout automatically.
+
+### 4. 💼 Institutional Buyer Demand Board
+- **Live Board:** [https://agriconnect-maharashtra.vercel.app/buyer/demand](https://agriconnect-maharashtra.vercel.app/buyer/demand)
+- **Sample Demand Listings:**
+  - **ITC Agri Business Division:** 500 Qtl Red Onion @ max ₹2,650/qtl (Delivery to Pimpalgaon processing unit).
+  - **Reliance Retail Fresh Sourcing:** 250 Qtl Hybrid Tomato @ max ₹2,150/qtl (Delivery to Chakan DC).
+  - **Godrej Agrovet Procurement:** 400 Qtl Soybean JS-335 @ max ₹5,120/qtl (Delivery to Butibori plant).
+- **Interactive Action:** Switch role to **Buyer** and click **Post New Procurement Demand** or submit an offer on an existing lot.
+
+### 5. 🤝 Guaranteed 7-Step Deal Lifecycle & Live Logistics
+- **Live Deals Tracker:** [https://agriconnect-maharashtra.vercel.app/farmer/deals](https://agriconnect-maharashtra.vercel.app/farmer/deals)
+- **Sample Pipeline Deals:**
+  - **Deal #DEAL-MH-2026-4401** (`OFFER_ACCEPTED`): ₹3,93,000 escrow locked in state vault.
+  - **Deal #DEAL-MH-2026-4402** (`IN_TRANSIT`): Dispatched in Eicher Pro 2049 (Jai Maharashtra Logistics, Driver Sunil Pawar: `+91-9823114455`).
+  - **Deal #DEAL-MH-2026-4405** (`COMPLETED`): 450 Qtl Onion delivered to Reliance Fresh; ₹11,70,000 escrow released to Sahyadri FPO account.
+
+### 6. 🏛️ State Oversight, KYC & Dispute Arbitration (MSIS / MSAMB)
+- **State Analytics Dashboard:** [https://agriconnect-maharashtra.vercel.app/admin/dashboard](https://agriconnect-maharashtra.vercel.app/admin/dashboard)
+  - Displays Total GMV (₹2.48 Cr+), Average Farmer Price Uplift (**+14.8%**), and active stakeholder counts.
+- **Buyer KYC Queue:** [https://agriconnect-maharashtra.vercel.app/admin/kyc](https://agriconnect-maharashtra.vercel.app/admin/kyc)
+  - Review and approve **KrushiVikas Commodity Traders** (License `APMC/NSK/B-1940`, GSTIN `27ABFFM8912M1ZP`).
+- **Dispute Resolution Workbench:** [https://agriconnect-maharashtra.vercel.app/admin/disputes](https://agriconnect-maharashtra.vercel.app/admin/disputes)
+  - Arbitrate **Dispute #DISP-MH-2026-001**: Buyer flagged 13.8% moisture on delivery vs 11.2% in digital passport. The state arbitrator can review weighbridge slips and unilaterally resolve funds (`Release to Farmer`, `Refund Buyer`, or `Split 50/50`).
+
+---
+
+## 📊 Seeded Baseline Datasets
+
+### Seed Commodities (8 Crops)
+| Crop | Marathi Name | Standard MSP | Typical Moisture | Export / Quality Benchmark |
+|---|---|---|---|---|
+| **Onion (Red Nashik)** | कांदा (नाशिक लाल) | ₹1,950 / qtl | 11.5% | Grade A: 50-70mm, dry neck |
+| **Soybean (JS-335)** | सोयाबीन (पिवळा) | ₹4,892 / qtl | 10.0% | Grade A: Oil >19%, moisture <10% |
+| **Cotton (Bt Long Staple)** | कापूस (लांब धागा) | ₹7,121 / qtl | 8.5% | Grade A: Staple >29mm, Micronaire 3.8-4.2 |
+| **Tur Dal (Pigeon Pea)** | तूर डाळ (लाल तूर) | ₹7,550 / qtl | 11.0% | Grade A: Bold milling grain |
+| **Tomato (Hybrid Vaishali)**| टोमॅटो (वैशाली) | ₹1,350 / qtl | 14.0% | Grade A: Firm breaker-to-red export |
+| **Wheat (Sharbati Lokwan)** | गहू (शरबती लोकवान) | ₹2,275 / qtl | 12.0% | Grade A: Golden luster, high gluten |
+| **Grapes (Thompson)** | द्राक्षे (थॉमसन) | ₹5,500 / qtl | 16.0% | Grade A: Brix >18, berry >16mm |
+| **Orange (Nagpur Mandarin)**| संत्री (नागपूर संत्रा) | ₹2,800 / qtl | 18.0% | Grade A: Thin peel, juice >45% |
+
+### Key APMC Mandis (6 Maharashtra Hubs)
+| APMC Mandi | District | Role | Contact |
+|---|---|---|---|
+| **Lasalgaon APMC** | Nashik | Asia's Largest Onion Hub | +91-2550-266224 |
+| **Pune Market Yard** | Pune | Major Central Consumption Hub | +91-20-24262841 |
+| **Nashik APMC** | Nashik | Fruit & Vegetable Terminal | +91-253-2512301 |
+| **Nagpur APMC (Kalamna)** | Nagpur | Vidarbha Cotton & Orange Hub | +91-712-2680124 |
+| **Chhatrapati Sambhaji Nagar** | CSN | Marathwada Grain & Pulse Market | +91-240-2381204 |
+| **Kolhapur APMC (Shahu Yard)** | Kolhapur | Western Maharashtra Terminal | +91-231-2651402 |
+
+---
+
 ## ☁️ Deployment to Vercel (with Neon / Supabase PostgreSQL)
 
 ### Step 1: Switch Prisma to PostgreSQL
