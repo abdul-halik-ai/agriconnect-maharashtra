@@ -105,9 +105,11 @@ export function LotPassportModal({ isOpen, onClose, lot }: LotPassportModalProps
                   Crop & Commodity
                 </div>
                 <h3 className="text-2xl font-display font-bold text-stone-900">
-                  {lot.commodity.nameEn}
+                  {lot.commodity?.nameEn || "Agricultural Commodity"}
                 </h3>
-                <p className="text-sm text-stone-600 font-medium">{lot.commodity.nameMr}</p>
+                <p className="text-sm text-stone-600 font-medium">
+                  {lot.commodity?.nameMr || "शेतमाल"}
+                </p>
               </div>
             </div>
 
@@ -204,14 +206,16 @@ export function LotPassportModal({ isOpen, onClose, lot }: LotPassportModalProps
                   FPO Pooled Farmer Contributors ({lot.contributions.length} Smallholders)
                 </div>
                 <div className="space-y-1 max-h-28 overflow-y-auto">
-                  {lot.contributions.map((c, i) => (
+                  {lot.contributions.map((c: any, i: number) => (
                     <div
                       key={i}
                       className="flex items-center justify-between text-xs bg-white px-2.5 py-1.5 rounded-lg border border-stone-100"
                     >
-                      <span className="font-medium text-stone-800">{c.farmer.name}</span>
+                      <span className="font-medium text-stone-800">
+                        {c.farmer?.name || c.farmerName || "Member Farmer"}
+                      </span>
                       <span className="font-mono text-stone-600">
-                        {c.contributedWeight} Qtl ({c.sharePercentage}%)
+                        {c.contributedWeight ?? c.quantityQuintals ?? 0} Qtl ({c.sharePercentage ?? c.sharePercent ?? 0}%)
                       </span>
                     </div>
                   ))}

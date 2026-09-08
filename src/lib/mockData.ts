@@ -241,6 +241,7 @@ export const MOCK_LOTS = [
         bankVerified: true
       }
     },
+    harvestDate: new Date(Date.now() - 86400000 * 2).toISOString(),
     createdAt: new Date().toISOString()
   },
   {
@@ -275,6 +276,7 @@ export const MOCK_LOTS = [
         bankVerified: true
       }
     },
+    harvestDate: new Date(Date.now() - 86400000 * 4).toISOString(),
     createdAt: new Date(Date.now() - 86400000).toISOString()
   },
   {
@@ -309,11 +311,12 @@ export const MOCK_LOTS = [
       }
     },
     contributions: [
-      { id: "c1", farmerName: "Ramesh Patil", quantityQuintals: 45.0, moisturePercent: 11.2, sharePercent: 30.0 },
-      { id: "c2", farmerName: "Suresh Jadhav", quantityQuintals: 40.0, moisturePercent: 11.4, sharePercent: 26.67 },
-      { id: "c3", farmerName: "Kavita Shinde", quantityQuintals: 35.0, moisturePercent: 11.1, sharePercent: 23.33 },
-      { id: "c4", farmerName: "Dattatray More", quantityQuintals: 30.0, moisturePercent: 11.5, sharePercent: 20.0 }
+      { id: "c1", farmer: { name: "Ramesh Patil" }, farmerName: "Ramesh Patil", contributedWeight: 45.0, quantityQuintals: 45.0, moisturePercent: 11.2, visualGrade: "A", sharePercentage: 30.0, sharePercent: 30.0 },
+      { id: "c2", farmer: { name: "Suresh Jadhav" }, farmerName: "Suresh Jadhav", contributedWeight: 40.0, quantityQuintals: 40.0, moisturePercent: 11.4, visualGrade: "A", sharePercentage: 26.67, sharePercent: 26.67 },
+      { id: "c3", farmer: { name: "Kavita Shinde" }, farmerName: "Kavita Shinde", contributedWeight: 35.0, quantityQuintals: 35.0, moisturePercent: 11.1, visualGrade: "A", sharePercentage: 23.33, sharePercent: 23.33 },
+      { id: "c4", farmer: { name: "Dattatray More" }, farmerName: "Dattatray More", contributedWeight: 30.0, quantityQuintals: 30.0, moisturePercent: 11.5, visualGrade: "A", sharePercentage: 20.0, sharePercent: 20.0 }
     ],
+    harvestDate: new Date(Date.now() - 86400000 * 5).toISOString(),
     createdAt: new Date(Date.now() - 172800000).toISOString()
   }
 ];
@@ -327,6 +330,7 @@ export const MOCK_DEMANDS = [
     requiredQuantity: 500.0,
     maxPriceOffer: 2650.0,
     targetDeliveryDate: new Date(Date.now() + 604800000).toISOString(),
+    expiryDate: new Date(Date.now() + 604800000).toISOString(),
     qualitySpecs: "Nashik Red Onion, Grade A, 50-70mm uniform diameter, moisture <11.5%, dry outer skin",
     deliveryLocation: "ITC Agri Food Processing Center, Pimpalgaon, Nashik",
     status: "ACTIVE",
@@ -352,6 +356,7 @@ export const MOCK_DEMANDS = [
     requiredQuantity: 250.0,
     maxPriceOffer: 2150.0,
     targetDeliveryDate: new Date(Date.now() + 345600000).toISOString(),
+    expiryDate: new Date(Date.now() + 345600000).toISOString(),
     qualitySpecs: "Hybrid Vaishali Tomato, Grade A, firm breaker-to-red stage, crates required",
     deliveryLocation: "Reliance Fresh DC, Chakan Midc, Pune",
     status: "ACTIVE",
@@ -377,6 +382,7 @@ export const MOCK_DEMANDS = [
     requiredQuantity: 400.0,
     maxPriceOffer: 5120.0,
     targetDeliveryDate: new Date(Date.now() + 864000000).toISOString(),
+    expiryDate: new Date(Date.now() + 864000000).toISOString(),
     qualitySpecs: "Yellow JS-335, Oil content >19%, moisture <10%, foreign matter <1%",
     deliveryLocation: "Godrej Solvent Extraction Hub, Butibori, Nagpur",
     status: "ACTIVE",

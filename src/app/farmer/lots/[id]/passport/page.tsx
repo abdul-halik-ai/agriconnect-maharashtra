@@ -239,13 +239,19 @@ export default function LotPassportDetailPage() {
                     {lot.contributions.map((c: any) => (
                       <tr key={c.id}>
                         <td className="py-2.5 px-3 font-semibold text-stone-900">
-                          {c.farmer.name}
+                          {c.farmer?.name || c.farmerName || "Member Farmer"}
                         </td>
-                        <td className="py-2.5 px-3 font-mono">{c.contributedWeight} Qtl</td>
-                        <td className="py-2.5 px-3 font-mono">{c.moisturePercent}%</td>
-                        <td className="py-2.5 px-3">Grade {c.visualGrade}</td>
+                        <td className="py-2.5 px-3 font-mono">
+                          {c.contributedWeight ?? c.quantityQuintals ?? 0} Qtl
+                        </td>
+                        <td className="py-2.5 px-3 font-mono">
+                          {c.moisturePercent ?? 11.2}%
+                        </td>
+                        <td className="py-2.5 px-3">
+                          Grade {c.visualGrade || "A"}
+                        </td>
                         <td className="py-2.5 px-3 font-mono font-bold text-right text-stone-800">
-                          {c.sharePercentage}%
+                          {c.sharePercentage ?? c.sharePercent ?? 0}%
                         </td>
                       </tr>
                     ))}

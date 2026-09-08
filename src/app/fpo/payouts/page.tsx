@@ -151,17 +151,20 @@ export default function FpoPayoutsPage() {
                       </thead>
                       <tbody className="divide-y divide-stone-100">
                         {deal.lot?.contributions?.map((c: any) => {
+                          const sharePct = Number(c.sharePercentage ?? c.sharePercent ?? 0);
                           const netPayout =
-                            c.payoutAmount || Math.round((c.sharePercentage / 100) * netDisbursable);
-                          const grossShare = (c.sharePercentage / 100) * deal.totalAmount;
+                            c.payoutAmount || Math.round((sharePct / 100) * netDisbursable);
+                          const grossShare = (sharePct / 100) * deal.totalAmount;
 
                           return (
                             <tr key={c.id} className="hover:bg-stone-50/50">
                               <td className="py-2.5 px-3 font-semibold text-stone-900">
-                                {c.farmer.name}
+                                {c.farmer?.name || c.farmerName || "Member Farmer"}
                               </td>
-                              <td className="py-2.5 px-3 font-mono">{c.contributedWeight} Qtl</td>
-                              <td className="py-2.5 px-3 font-mono">{c.sharePercentage}%</td>
+                              <td className="py-2.5 px-3 font-mono">
+                                {c.contributedWeight ?? c.quantityQuintals ?? 0} Qtl
+                              </td>
+                              <td className="py-2.5 px-3 font-mono">{sharePct}%</td>
                               <td className="py-2.5 px-3 font-mono text-stone-600">
                                 {formatINR(grossShare)}
                               </td>
