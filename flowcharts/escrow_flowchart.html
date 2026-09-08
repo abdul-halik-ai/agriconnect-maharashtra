@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AgriConnect Maharashtra - 7-Stage Escrow Pipeline</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; }
+    body {
+      background: #0f172a;
+      color: #f8fafc;
+      width: 1300px;
+      height: 720px;
+      padding: 30px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #1e293b;
+      padding-bottom: 16px;
+    }
+    .title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .badge {
+      background: #1e293b;
+      color: #10b981;
+      border: 1px solid #10b981;
+      padding: 4px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .step {
+      background: #1e293b;
+      border: 2px solid #334155;
+      border-radius: 12px;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+    .step:nth-child(1) { border-top: 4px solid #10b981; }
+    .step:nth-child(2) { border-top: 4px solid #06b6d4; }
+    .step:nth-child(3) { border-top: 4px solid #3b82f6; }
+    .step:nth-child(4) { border-top: 4px solid #8b5cf6; }
+    .step:nth-child(5) { border-top: 4px solid #f59e0b; }
+    .step:nth-child(6) { border-top: 4px solid #ec4899; }
+    .step:nth-child(7) { border-top: 4px solid #10b981; }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #0f172a;
+      border: 1px solid #475569;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+      color: #38bdf8;
+    }
+    .step-icon {
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+    .step-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+      min-height: 36px;
+      line-height: 1.2;
+    }
+    .step-desc {
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.35;
+      flex-grow: 1;
+    }
+    .step-status {
+      margin-top: 10px;
+      background: #0f172a;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #34d399;
+      border: 1px solid #1e293b;
+      width: 100%;
+    }
+    .guarantee-bar {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .g-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .g-icon { font-size: 22px; }
+    .g-text { font-size: 13px; color: #cbd5e1; font-weight: 600; }
+    .g-text span { color: #10b981; font-weight: 800; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">
+      🛡️ 7-Stage Milestone Escrow Protocol (Zero-Default Architecture)
+    </div>
+    <div class="badge">FINANCIAL INTEGRITY ASSURANCE</div>
+  </div>
+
+  <div class="pipeline">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-icon">🔒</div>
+      <div class="step-name">Escrow Lock</div>
+      <div class="step-desc">Buyer deposits 100% deal amount into verified escrow vault before dispatch.</div>
+      <div class="step-status">FUNDS SECURED</div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-icon">🚚</div>
+      <div class="step-name">Logistics Booked</div>
+      <div class="step-desc">Transporter matched; vehicle number, driver contact & e-way bill generated.</div>
+      <div class="step-status">TRANSPORTER KYC</div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-icon">📍</div>
+      <div class="step-name">In Transit</div>
+      <div class="step-desc">Produce loaded; live GPS tracking and estimated arrival time transmitted.</div>
+      <div class="step-status">GEO-CHECKPOINTS</div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-icon">🏢</div>
+      <div class="step-name">Hub Arrival</div>
+      <div class="step-desc">Truck arrives at warehouse; physical QR passport scanned by receiver.</div>
+      <div class="step-status">ARRIVAL LOGGED</div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-icon">⚖️</div>
+      <div class="step-name">Weighment</div>
+      <div class="step-desc">Digital weighbridge slip uploaded to verify gross, tare, and net quintals.</div>
+      <div class="step-status">NET WEIGHT SEALED</div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-icon">🔬</div>
+      <div class="step-name">Quality Check</div>
+      <div class="step-desc">Moisture meter test & visual grade verified against passport tolerances.</div>
+      <div class="step-status">GRADE CONFIRMED</div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-icon">💰</div>
+      <div class="step-name">Instant Payout</div>
+      <div class="step-desc">Smart contract disburses split DBT payouts directly to farmer bank accounts.</div>
+      <div class="step-status">SETTLED IN 24H</div>
+    </div>
+  </div>
+
+  <div class="guarantee-bar">
+    <div class="g-item">
+      <div class="g-icon">✅</div>
+      <div class="g-text"><span>0% Risk</span> to Farmer</div>
+    </div>
+    <div class="g-item">
+      <div class="g-icon">⚡</div>
+      <div class="g-text"><span>Instant Split</span> Payout</div>
+    </div>
+    <div class="g-item">
+      <div class="g-icon">🏛️</div>
+      <div class="g-text"><span>State Supervised</span> Arbitration</div>
+    </div>
+    <div class="g-item">
+      <div class="g-icon">🧾</div>
+      <div class="g-text"><span>GST & APMC</span> Tax Compliant</div>
+    </div>
+  </div>
+</body>
+</html>
