@@ -1,0 +1,325 @@
+// Prisma Schema for AgriConnect Maharashtra (PostgreSQL for Neon / Supabase / Vercel)
+// Use `npm run db:switch:postgres` to activate this schema.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String?   @unique
+  phone         String    @unique
+  password      String    @default("demo123")
+  role          String    // FARMER, FPO, BUYER, ADMIN
+  avatar        String?
+  district      String    @default("Nashik")
+  taluka        String?
+  state         String    @default("Maharashtra")
+  language      String    @default("en") // en, mr
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  farmerProfile   FarmerProfile?
+  fpoProfile      FpoProfile?
+  buyerProfile    BuyerProfile?
+  lotsCreated     Lot[]            @relation("UserLots")
+  lotContributions LotContribution[] @relation("FarmerContributions")
+  demandListings  DemandListing[]  @relation("BuyerDemands")
+  offersSent      Offer[]          @relation("OffersSent")
+  offersReceived  Offer[]          @relation("OffersReceived")
+  buyerDeals      Transaction[]    @relation("BuyerDeals")
+  sellerDeals     Transaction[]    @relation("SellerDeals")
+  disputesRaised  Dispute[]        @relation("DisputesRaised")
+  disputesResolved Dispute[]       @relation("DisputesResolved")
+  notifications   Notification[]   @relation("UserNotifications")
+  bookings        Booking[]
+}
+
+model FarmerProfile {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  landSizeAcres   Float    @default(3.5)
+  aadharVerified  Boolean  @default(true)
+  kisanCreditCard Boolean  @default(true)
+  primaryCrops    String   @default("Onion, Soybean, Grapes")
+  bankAccountNo   String   @default("918237461928")
+  ifscCode        String   @default("MAHB0001234")
+  fpoId           String?
+  fpo             FpoProfile? @relation(fields: [fpoId], references: [id])
+}
+
+model FpoProfile {
+  id                  String          @id @default(cuid())
+  userId              String          @unique
+  user                User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fpoName             String
+  registrationNo      String
+  establishedYear     Int             @default(2019)
+  memberCount         Int             @default(280)
+  operationalDistricts String         @default("Nashik, Pune, Ahmednagar")
+  officeAddress       String
+  warehouseCapacityMT Float           @default(500.0)
+  verifiedByAdmin     Boolean         @default(true)
+  memberFarmers       FarmerProfile[]
+}
+
+model BuyerProfile {
+  id               String    @id @default(cuid())
+  userId           String    @unique
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyName      String
+  businessType     String    @default("Processor")
+  apmcLicenseNo    String
+  gstin            String
+  reliabilityScore Float     @default(4.8)
+  tradeVolumeMT    Float     @default(1200.0)
+  paymentTerms     String    @default("Escrow T+2 on Quality Check")
+  kycStatus        String    @default("VERIFIED") // PENDING, VERIFIED, REJECTED
+  verifiedAt       DateTime?
+}
+
+model Commodity {
+  id                     String        @id @default(cuid())
+  nameEn                 String        @unique
+  nameMr                 String
+  category               String
+  mspPrice               Float
+  typicalMoistureStandard Float        @default(12.0)
+  gradeSpecs             String        @default("Grade A (Export), Grade B (Fair Average Quality), Grade C (Processing)")
+  imageUrl               String?
+  priceRecords           PriceRecord[]
+  lots                   Lot[]
+  demandListings         DemandListing[]
+  transactions           Transaction[]
+}
+
+model Market {
+  id           String        @id @default(cuid())
+  nameEn       String        @unique
+  nameMr       String
+  district     String
+  latitude     Float
+  longitude    Float
+  isMajorHub   Boolean       @default(true)
+  contactPhone String?
+  priceRecords PriceRecord[]
+  lots         Lot[]
+}
+
+model PriceRecord {
+  id            String    @id @default(cuid())
+  commodityId   String
+  commodity     Commodity @relation(fields: [commodityId], references: [id], onDelete: Cascade)
+  marketId      String
+  market        Market    @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  date          DateTime
+  minPrice      Float
+  maxPrice      Float
+  modalPrice    Float
+  arrivalVolume Float
+  trendSlope    Float     @default(0.0)
+
+  @@index([commodityId, marketId, date])
+}
+
+model Lot {
+  id                  String            @id @default(cuid())
+  lotNumber           String            @unique
+  ownerType           String            @default("FARMER")
+  creatorId           String
+  creator             User              @relation("UserLots", fields: [creatorId], references: [id], onDelete: Cascade)
+  commodityId         String
+  commodity           Commodity         @relation(fields: [commodityId], references: [id])
+  marketId            String?
+  market              Market?           @relation(fields: [marketId], references: [id])
+  quantityQuintals    Float
+  basePriceExpected   Float
+  moisturePercent     Float
+  visualGrade         String            @default("A")
+  harvestDate         DateTime          @default(now())
+  status              String            @default("AVAILABLE")
+  digitalPassportHash String
+  qrCodeData          String?
+  photoUrls           String            @default("[]")
+  storageLocation     String            @default("Farmer Farm Gate")
+  isAggregated        Boolean           @default(false)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  offers              Offer[]
+  transactions        Transaction[]
+  contributions       LotContribution[] @relation("AggregatedContributions")
+}
+
+model LotContribution {
+  id                String    @id @default(cuid())
+  aggregatedLotId   String
+  aggregatedLot     Lot       @relation("AggregatedContributions", fields: [aggregatedLotId], references: [id], onDelete: Cascade)
+  farmerId          String
+  farmer            User      @relation("FarmerContributions", fields: [farmerId], references: [id], onDelete: Cascade)
+  contributedWeight Float
+  moisturePercent   Float
+  visualGrade       String    @default("A")
+  sharePercentage   Float
+  payoutAmount      Float?
+  payoutStatus      String    @default("PENDING")
+  createdAt         DateTime  @default(now())
+}
+
+model DemandListing {
+  id               String    @id @default(cuid())
+  buyerId          String
+  buyer            User      @relation("BuyerDemands", fields: [buyerId], references: [id], onDelete: Cascade)
+  commodityId      String
+  commodity        Commodity @relation(fields: [commodityId], references: [id])
+  targetGrade      String    @default("A")
+  minMoisture      Float     @default(8.0)
+  maxMoisture      Float     @default(13.0)
+  requiredQuantity Float
+  minPrice         Float
+  maxPrice         Float
+  deliveryLocation String
+  deliveryTerms    String    @default("Buyer Warehouse Gate")
+  expiryDate       DateTime
+  status           String    @default("OPEN")
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  offers           Offer[]
+}
+
+model Offer {
+  id              String         @id @default(cuid())
+  demandListingId String?
+  demandListing   DemandListing? @relation(fields: [demandListingId], references: [id])
+  lotId           String?
+  lot             Lot?           @relation(fields: [lotId], references: [id])
+  buyerId         String
+  buyer           User           @relation("OffersSent", fields: [buyerId], references: [id])
+  sellerId        String
+  seller          User           @relation("OffersReceived", fields: [sellerId], references: [id])
+  offeredPrice    Float
+  offeredQuantity Float
+  deliveryLocation String
+  paymentTerms    String         @default("100% Escrow on Quality Acceptance")
+  notes           String?
+  status          String         @default("PENDING")
+  counterPrice    Float?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  transaction     Transaction?
+}
+
+model Transaction {
+  id                   String     @id @default(cuid())
+  dealNumber           String     @unique
+  offerId              String     @unique
+  offer                Offer      @relation(fields: [offerId], references: [id])
+  buyerId              String
+  buyer                User       @relation("BuyerDeals", fields: [buyerId], references: [id])
+  sellerId             String
+  seller               User       @relation("SellerDeals", fields: [sellerId], references: [id])
+  lotId                String
+  lot                  Lot        @relation(fields: [lotId], references: [id])
+  commodityId          String
+  commodity            Commodity  @relation(fields: [commodityId], references: [id])
+  agreedPrice          Float
+  agreedQuantity       Float
+  totalAmount          Float
+  escrowStatus         String     @default("HELD")
+  stage                String     @default("OFFER_ACCEPTED")
+  deliveryLocation     String
+  weighmentSlipUrl     String?
+  qualityInspectorNote String?
+  confirmedMoisture    Float?
+  confirmedGrade       String?
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+
+  disputes             Dispute[]
+  bookings             Booking[]
+}
+
+model TransportProvider {
+  id           String    @id @default(cuid())
+  companyName  String
+  contactName  String
+  phone        String
+  vehicleType  String
+  capacityMT   Float
+  ratePerKm    Float
+  baseDistrict String
+  rating       Float     @default(4.7)
+  isAvailable  Boolean   @default(true)
+  bookings     Booking[]
+}
+
+model StorageFacility {
+  id                    String    @id @default(cuid())
+  name                  String
+  facilityType          String
+  district              String
+  location              String
+  totalCapacityMT       Float
+  availableCapacityMT   Float
+  monthlyRatePerQuintal Float
+  humidityControlled    Boolean   @default(false)
+  contactPhone          String
+  bookings              Booking[]
+}
+
+model Booking {
+  id                  String             @id @default(cuid())
+  transactionId       String?
+  transaction         Transaction?       @relation(fields: [transactionId], references: [id])
+  userId              String
+  user                User               @relation(fields: [userId], references: [id])
+  bookingType         String
+  transportProviderId String?
+  transportProvider   TransportProvider? @relation(fields: [transportProviderId], references: [id])
+  storageFacilityId   String?
+  storageFacility     StorageFacility?   @relation(fields: [storageFacilityId], references: [id])
+  startDate           DateTime           @default(now())
+  durationDays        Int                @default(1)
+  estimatedCost       Float
+  status              String             @default("CONFIRMED")
+  createdAt           DateTime           @default(now())
+}
+
+model Dispute {
+  id              String      @id @default(cuid())
+  transactionId   String
+  transaction     Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  raisedById      String
+  raisedBy        User        @relation("DisputesRaised", fields: [raisedById], references: [id])
+  reasonCategory  String
+  description     String
+  evidenceUrls    String      @default("[]")
+  status          String      @default("OPEN")
+  resolutionNotes String?
+  resolvedById    String?
+  resolvedBy      User?       @relation("DisputesResolved", fields: [resolvedById], references: [id])
+  resolvedAt      DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation("UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  link      String?
+  type      String   @default("DEAL_STAGE")
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
